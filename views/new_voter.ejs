@@ -32,8 +32,8 @@
                 <div class="h-2 bg-black rounded-t-md"></div>
                 <form action="/elections/<%= electionID %>/voters/create" method="post" class="px-8 py-6">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                    <label for="voterid" class="block mt-3 font-semibold">Voter ID</label>
-                    <input id="voterid" name="voterid" type="voterid" placeholder="Voter ID" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+                    <label for="VoterId" class="block mt-3 font-semibold">Voter ID</label>
+                    <input id="VoterId" name="VoterId" type="VoterId" placeholder="Voter ID" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
                     <label for="password" class="block mt-3 font-semibold">Password</label>
                     <input id="password" name="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
                     <button type="submit" class="mt-6 w-full bg-black text-white py-2 px-6 rounded-md hover:bg-blue-600 ">Add new voter</button>

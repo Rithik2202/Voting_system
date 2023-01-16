@@ -10,9 +10,9 @@
     <script>
         var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         function updateOption() {
-            let electionID = <%= electionID %>;
-            let questionID = <%= questionID %>;
-            let optionID = <%= optionID %>;
+            let electionID = '<%= electionID %>';
+            let questionID = '<%= questionID %>';
+            let optionID = '<%= optionID %>';
             let option = document.getElementById("option").value;
             fetch(`/options/${optionID}/edit`, {
                 method: "put",

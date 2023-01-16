@@ -10,8 +10,8 @@
     <script>
         var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         function updateQuestion() {
-            let electionID = <%= electionID %>;
-            let questionID = <%= questionID %>;
+            let electionID = '<%= electionID %>';
+            let questionID = '<%= questionID %>';
             let question = document.getElementById("question").value;
             let description = document.getElementById("description").value;
             fetch(`/questions/${questionID}/edit`, {
