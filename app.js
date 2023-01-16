@@ -289,14 +289,14 @@ app.get(
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
-      const election = await election.getElection(request.params.id);
+      const elections = await election.getElection(request.params.id);
       const numberOfQuestions = await Questions.getNumberOfQuestions(
         request.params.id
       );
       const numberOfVoters = await Voter.getNumberOfVoters(request.params.id);
-      return response.render("election_homepage", {
+      return response.render("election_home_page", {
         id: request.params.id,
-        title: election.ElectionName,
+        title: elections.ElectionName,
         nq: numberOfQuestions,
         nv: numberOfVoters,
       });
@@ -313,11 +313,11 @@ app.get(
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
-      const election = await Election.getElection(request.params.id);
+      const elections= await election.getElection(request.params.id);
       const questions = await Questions.getQuestions(request.params.id);
       if (request.accepts("html")) {
         return response.render("questions", {
-          title: election.ElectionName,
+          title: elections.ElectionName,
           id: request.params.id,
           questions: questions,
           csrfToken: request.csrfToken(),
@@ -444,7 +444,7 @@ app.get(
       const question = await Questions.getQuestion(request.params.questionID);
       const options = await Options.getOptions(request.params.questionID);
       if (request.accepts("html")) {
-        response.render("question_page", {
+        response.render("questions_page", {
           title: question.question,
           description: question.description,
           id: request.params.id,
@@ -549,10 +549,10 @@ app.get(
   async (request, response) => {
     try {
       const voters = await Voter.getVoters(request.params.electionID);
-      const election = await Election.getElection(request.params.electionID);
+      const elections = await election.getElection(request.params.electionID);
       if (request.accepts("html")) {
         return response.render("voters", {
-          title: election.ElectionName,
+          title: elections.ElectionName,
           id: request.params.electionID,
           voters,
           csrfToken: request.csrfToken(),
@@ -602,7 +602,7 @@ app.post(
     const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
     try {
       await Voter.createVoter({
-        voterid: request.body.VoterId,
+        VoterId: request.body.VoterId,
         password: hashedPwd,
         electionID: request.params.electionID,
       });
@@ -618,11 +618,11 @@ app.post(
 
 //Delete the voter
 app.delete(
-  "/elections/:electionID/voters/:voterID",
+  "/elections/:electionID/voters/:VoterId",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
-      const res = await Voter.deleteVoter(request.params.VoterID);
+      const res = await Voter.deleteVoter(request.params.VoterId);
       return response.json({ success: res === 1 });
     } catch (error) {
       console.log(error);
@@ -633,13 +633,13 @@ app.delete(
 
 //voter password reset page
 app.get(
-  "/elections/:electionID/voters/:voterID/edit",
+  "/elections/:electionID/voters/:VoterId/edit",
   connectEnsureLogin.ensureLoggedIn(),
   (request, response) => {
     response.render("voter_reset_password", {
       title: "Reset voter password",
       electionID: request.params.electionID,
-      VoterID: request.params.VoterID,
+      VoterId: request.params.VoterId,
       csrfToken: request.csrfToken(),
     });
   }
@@ -647,7 +647,7 @@ app.get(
 
 //reset user password
 app.post(
-  "/elections/:electionID/voters/:voterID/edit",
+  "/elections/:electionID/voters/:VoterId/edit",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (!request.body.new_password) {
@@ -663,7 +663,7 @@ app.post(
       saltRounds
     );
     try {
-      Voter.findOne({ where: { id: request.params.VoterID } }).then((user) => {
+      Voter.findOne({ where: { id: request.params.VoterId } }).then((user) => {
         user.resetPass(hashedNewPwd);
       });
       request.flash("success", "Password changed successfully");

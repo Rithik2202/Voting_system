@@ -468,7 +468,7 @@ describe("Online voting application", function () {
     res = await agent
       .post(`/elections/${latestElection.id}/voters/create`)
       .send({
-        voterid: "Test voter",
+        VoterId: "Test voter",
         password: "Test password",
         _csrf: csrfToken,
       });
@@ -499,7 +499,7 @@ describe("Online voting application", function () {
     res = await agent
       .post(`/elections/${latestElection.id}/voters/create`)
       .send({
-        voterid: "ashish",
+        VoterId: "ashish",
         password: "011618",
         _csrf: csrfToken,
       });

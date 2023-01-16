@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ password });
     }
 
-    static async createVoter({ voterid, password, electionID }) {
+    static async createVoter({ VoterId, password, electionID }) {
       return await this.create({
-        voterid,password,electionID,voted: false,
+        VoterId,password,electionID,voted: false,
       });
     }
 
